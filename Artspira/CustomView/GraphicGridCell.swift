@@ -11,7 +11,7 @@ struct GraphicGridCell: View {
     
     var title : String
     var bgColor: Color
-    var image: Image
+    var imageName: String
     
     var body: some View {
         screenView
@@ -41,10 +41,9 @@ extension GraphicGridCell{
                             .foregroundStyle(Color.white)
                             .opacity(0.5)
                         
-                        image
-                            .resizable()
+                        SVGParser(imageName: imageName)
                             .frame(width: 120, height: 120)
-                            .foregroundStyle(Color.blue)
+                            .cornerRadius(12, corners: .allCorners)
                         
                     }
                     .rotationEffect(Angle(degrees: 8))
@@ -62,5 +61,5 @@ extension GraphicGridCell{
 }
 
 #Preview {
-    GraphicGridCell(title: "Christmas", bgColor: .lightGray, image: Image(systemName: "pencil.tip.crop.circle.fill"))
+    GraphicGridCell(title: "Christmas", bgColor: .lightGray, imageName: "BabyItsColdOutside")
 }

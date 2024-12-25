@@ -44,4 +44,18 @@ enum ImageName: String {
         Image("EmptyState")
     }
    
+    
+    //MARK: Navbar
+    
+    static var arrowBackward: Image {
+        
+        Image("arrow-turn-backward")
+    }
+    
+    //MARK: Splash Image
+    
+    static var splashImage: Image {
+        
+        Image("splashImage")
+    }
 }

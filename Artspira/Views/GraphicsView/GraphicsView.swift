@@ -29,21 +29,28 @@ extension GraphicsView{
         
         VStack{
             
-            Text("Graphics")
-                .font(.semiBold(size: 20))
+            TopNav(title: "Graphics", showBackButton: false)
             
             ScrollView(showsIndicators: false) {
                 
                 LazyVGrid(columns: columns, spacing: 16) {
                     
-                    ForEach(0..<10) { _ in
+                    ForEach(categories.keys.sorted(), id: \.self) { category in
                         
-                        GraphicGridCell(
-                            title: "Christmas",
-                            bgColor: .lightGray,
-                            image: Image(systemName: "trash.slash.fill")
+                        NavigationLink{
                             
-                        )
+                            CategoryView(selectedCategory: category)
+                                .navigationBarBackButtonHidden()
+                            
+                        }label: {
+                            
+                            GraphicGridCell(
+                                title: category.capitalized,
+                                bgColor: Color(hex: "#D8E0FB"),
+                                imageName: "\(categories[category]?.first ?? "")"
+                            )
+                        }
+                        
                     }
                 }
                 

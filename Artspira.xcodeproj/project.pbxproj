@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		41359C3C2D16DB610088BDF3 /* Macaw in Frameworks */ = {isa = PBXBuildFile; productRef = 41359C3B2D16DB610088BDF3 /* Macaw */; };
+		41359C3F2D16DBCE0088BDF3 /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 41359C3E2D16DBCE0088BDF3 /* SVGKit */; };
+		41359C412D16DBCE0088BDF3 /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41359C402D16DBCE0088BDF3 /* SVGKitSwift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		418C7B722D14229500EDD152 /* Artspira.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artspira.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +42,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41359C412D16DBCE0088BDF3 /* SVGKitSwift in Frameworks */,
+				41359C3F2D16DBCE0088BDF3 /* SVGKit in Frameworks */,
+				41359C3C2D16DB610088BDF3 /* Macaw in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +87,9 @@
 			);
 			name = Artspira;
 			packageProductDependencies = (
+				41359C3B2D16DB610088BDF3 /* Macaw */,
+				41359C3E2D16DBCE0088BDF3 /* SVGKit */,
+				41359C402D16DBCE0088BDF3 /* SVGKitSwift */,
 			);
 			productName = Artspira;
 			productReference = 418C7B722D14229500EDD152 /* Artspira.app */;
@@ -107,6 +119,10 @@
 			);
 			mainGroup = 418C7B692D14229500EDD152;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				41359C3A2D16DB610088BDF3 /* XCRemoteSwiftPackageReference "Macaw" */,
+				41359C3D2D16DBCE0088BDF3 /* XCRemoteSwiftPackageReference "SVGKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 418C7B732D14229500EDD152 /* Products */;
 			projectDirPath = "";
@@ -274,6 +290,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -281,9 +298,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brandon.Artspira;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -304,6 +325,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,9 +333,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.brandon.Artspira;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -339,6 +365,43 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		41359C3A2D16DB610088BDF3 /* XCRemoteSwiftPackageReference "Macaw" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/Macaw.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.10;
+			};
+		};
+		41359C3D2D16DBCE0088BDF3 /* XCRemoteSwiftPackageReference "SVGKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SVGKit/SVGKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		41359C3B2D16DB610088BDF3 /* Macaw */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41359C3A2D16DB610088BDF3 /* XCRemoteSwiftPackageReference "Macaw" */;
+			productName = Macaw;
+		};
+		41359C3E2D16DBCE0088BDF3 /* SVGKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41359C3D2D16DBCE0088BDF3 /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKit;
+		};
+		41359C402D16DBCE0088BDF3 /* SVGKitSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41359C3D2D16DBCE0088BDF3 /* XCRemoteSwiftPackageReference "SVGKit" */;
+			productName = SVGKitSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 418C7B6A2D14229500EDD152 /* Project object */;
 }

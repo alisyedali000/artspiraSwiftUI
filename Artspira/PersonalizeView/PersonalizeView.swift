@@ -14,12 +14,21 @@ struct PersonalizeView: View {
     @State var tags : [String] = ["Travel", "Cricket", "Games", "Photography", "Ad s", "asdhf khds akj fhdksj ", " jsadklf jdskjf ksd", " sdkhf kjds fds"]
     @State var selectedTags = ["Travel", "Cricket"]
     
+    @State var moveNext = false
+    
     @State private var totalHeight = CGFloat.zero // For dynamic height adjustment
     
     var body: some View {
         
         screenView
             .padding(.horizontal)
+            .navigationDestination(isPresented: $moveNext) {
+                
+                ChooseFavouriteView()
+                    .navigationBarBackButtonHidden()
+                
+                
+            }
         
     }
     
@@ -45,7 +54,7 @@ extension PersonalizeView{
             Spacer()
             
             AppButton(title: "Continue") {
-                
+                self.moveNext.toggle()
             }
             
         }

@@ -63,10 +63,9 @@ extension Color {
         Color(hex: "#91A4F3")
     }
     
-    
-
-    
-    
-    
+    static var primaryBlack: Color {
+        
+        Color(hex: "#141B34")
+    }
     
 }
