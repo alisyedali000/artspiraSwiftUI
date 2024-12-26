@@ -9,22 +9,29 @@ import SwiftUI
 import Macaw
 
 struct ChooseFavouriteView: View {
+    
+    @ObservedObject var vm : ViewModel
     @State var moveNext = false
-    @State var images = []
+    
+    let columns = [
+         GridItem(.flexible()),
+         GridItem(.flexible())
+     ]
     
     var body: some View {
         screenView
+            .onAppear(){
+                vm.selectedCategories = ["Christmas"] // Uncomment for Preview
+                vm.fetchSuggestedGraphics()
+            }
+            .padding(.horizontal)
             .navigationDestination(isPresented: $moveNext, destination: {
                 
                 TabBar()
                     .navigationBarBackButtonHidden()
                 
             })
-            .onAppear(){
-                
-                self.loadImages()
-                
-            }
+
     }
 }
 
@@ -32,23 +39,61 @@ extension ChooseFavouriteView{
     
     var screenView: some View {
         
-        VStack(alignment: .leading, spacing: 5){
+        VStack(alignment: .leading, spacing: 20){
             
+            VStack(alignment: .leading){
+                
+                Text("Choose 3-5 of your favorite")
+                    .font(.semiBold(size: 24))
+                
+                Text("graphics you see:")
+                    .font(.semiBold(size: 24))
+            }
             
-            Text("Choose 3-5 of your favorite")
-                .font(.semiBold(size: 24))
-            
-            Text("graphics you see:")
-                .font(.semiBold(size: 24))
-            
-            imageCell(path: images.first as? String ?? "") {
+            ScrollView(showsIndicators: false) {
+                
+                LazyVGrid(columns: columns, spacing: 16) {
+                    
+                    ForEach(vm.suggestedGraphics, id: \.self) { fileName in
+                        
+                        ZStack(alignment: .topTrailing){
+                            
+                            SVGParser(imageName: fileName)
+                                .frame(width: 173, height: 169)
+                                .addStroke(radius: 8, color: vm.personalizeFavourites.contains(fileName) ? .primaryBlue : .gray.opacity(0.4), lineWidth: vm.personalizeFavourites.contains(fileName) ? 2 : 1)
+                            
+                            if vm.personalizeFavourites.contains(fileName){
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundStyle(Color.primaryBlue)
+                                    .padding()
+                            }
+                            
+                        }
+                        .onTapGesture {
+                            
+                            if vm.personalizeFavourites.contains(fileName){
+                                
+                                vm.personalizeFavourites.removeAll(where: {$0 == fileName})
+                                
+                            } else {
+                                
+                                vm.personalizeFavourites.append(fileName)
+                                
+                            }
+                        }
+                        
+                    }
+                }
                 
             }
             
-            Button{
-                self.moveNext = true
-            }label: {
-                Text("Dds")
+            AppButton(title: "Continue") {
+                
+                vm.addFavourties(){
+                    
+                    self.moveNext.toggle()
+                    
+                }
             }
         }
         
@@ -69,26 +114,10 @@ extension ChooseFavouriteView{
 
 extension ChooseFavouriteView{
     
-    func loadImages() {
 
-        self.images = Bundle.main.paths(forResourcesOfType: "svg", inDirectory: nil)
-//        debugPrint(images.count)
-        debugPrint(images)
-////        self.images.first = self.images.first
-////
-//        if let resourceURL = Bundle.main.resourceURL {
-//            print("Resource URL: \(resourceURL.path)")
-//        }
-        
-        if let svgPath = Bundle.main.path(forResource: "example", ofType: "svg", inDirectory: nil) {
-            print("SVG found at path: \(svgPath)")
-        } else {
-            print("SVG not found")
-        }
-    }
     
 }
 
 #Preview {
-    ChooseFavouriteView()
+    ChooseFavouriteView(vm: ViewModel())
 }

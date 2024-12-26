@@ -44,6 +44,7 @@ extension CategoryView{
                                 NavigationLink{
                                     
                                     EditSVGView(fileName: filename)
+                                        .navigationBarBackButtonHidden()
                                     
                                 }label: {
                                     

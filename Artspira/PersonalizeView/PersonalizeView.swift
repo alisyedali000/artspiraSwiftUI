@@ -11,8 +11,7 @@ import SwiftUI
 
 struct PersonalizeView: View {
     
-    @State var tags : [String] = ["Travel", "Cricket", "Games", "Photography", "Ad s", "asdhf khds akj fhdksj ", " jsadklf jdskjf ksd", " sdkhf kjds fds"]
-    @State var selectedTags = ["Travel", "Cricket"]
+    @StateObject var vm = ViewModel()
     
     @State var moveNext = false
     
@@ -24,7 +23,7 @@ struct PersonalizeView: View {
             .padding(.horizontal)
             .navigationDestination(isPresented: $moveNext) {
                 
-                ChooseFavouriteView()
+                ChooseFavouriteView(vm: self.vm)
                     .navigationBarBackButtonHidden()
                 
                 
@@ -54,7 +53,9 @@ extension PersonalizeView{
             Spacer()
             
             AppButton(title: "Continue") {
-                self.moveNext.toggle()
+                if !vm.selectedCategories.isEmpty{
+                    self.moveNext.toggle()
+                }
             }
             
         }
@@ -81,18 +82,18 @@ extension PersonalizeView{
         var height = CGFloat.zero
 
         return ZStack(alignment: .topLeading) {
-            ForEach(tags, id: \.self) { tag in
+            ForEach(vm.personalizeTags, id: \.self) { tag in
                 CategoryTag(
                     isSelected: Binding(
-                        get: { selectedTags.contains(tag) },
+                        get: { vm.selectedCategories.contains(tag) },
                         set: { _ in } // Do nothing since action handles the updates
                     ),
                     title: tag,
                     action: {
-                        if selectedTags.contains(tag){
-                            self.selectedTags.removeAll(where: {$0 == tag}) // Use the provided action for add/remove
+                        if vm.selectedCategories.contains(tag){
+                            vm.selectedCategories.removeAll(where: {$0 == tag}) // Use the provided action for add/remove
                         } else {
-                            self.selectedTags.append(tag)
+                            vm.selectedCategories.append(tag)
                         }
                     }
                 )
@@ -104,7 +105,7 @@ extension PersonalizeView{
                         height -= d.height
                     }
                     let result = width
-                    if tag == self.tags.last {
+                    if tag == self.vm.personalizeTags.last {
                         width = 0 // last item
                     } else {
                         width -= d.width
@@ -113,7 +114,7 @@ extension PersonalizeView{
                 })
                 .alignmentGuide(.top, computeValue: { _ in
                     let result = height
-                    if tag == tags.last {
+                    if tag == vm.personalizeTags.last {
                         height = 0 // Reset for the last item
                     }
                     return result

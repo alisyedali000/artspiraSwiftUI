@@ -15,28 +15,31 @@ struct EditSVGView: View {
     @State var color : Color = .white
     @State var bgColor : Color = .white
     
-    @State private var scale: CGFloat = 1.0 // Scale factor for pinch-to-zoom
-    @State private var offset: CGSize = .zero
-
+//    @State private var scale: CGFloat = 1.0 // Scale factor for pinch-to-zoom
+//    @State private var offset: CGSize = .zero
+    
+    @State var sizing : SVGSizing = .fullRes
+    
     var fileName: String
+    
     var body: some View {
         screenView
             .padding(.horizontal)
             .onChange(of: newColor) {
                 
-                if !self.graphicColors.contains(newColor){
-                    self.graphicColors.append(newColor)
-                    
-                }
+//                if !self.graphicColors.contains(newColor){
+//                    self.graphicColors.append(newColor)
+//                    
+//                }
                 
                 self.color = newColor
             }
             .onChange(of: bgColor) {
                 
-                if !self.bgColors.contains(bgColor){
-                    self.bgColors.append(bgColor)
-                    
-                }
+//                if !self.bgColors.contains(bgColor){
+//                    self.bgColors.append(bgColor)
+//                    
+//                }
             }
     }
 }
@@ -47,7 +50,7 @@ extension EditSVGView{
         
         VStack{
             
-            TopNav(title: fileName.capitalized)
+            topNav
             
             ScrollView{
                 
@@ -66,6 +69,8 @@ extension EditSVGView{
                     
                     adjustSizing
                     
+                    downloadButtons
+                    
                 }
                 
             }
@@ -76,6 +81,24 @@ extension EditSVGView{
 }
 
 extension EditSVGView{
+    
+    var topNav : some View{
+        
+        ZStack(alignment: .trailing){
+            
+            TopNav(title: fileName.capitalized)
+            
+            Button{
+                
+            }label: {
+                ImageName.favourites
+                    .renderingMode(.template)
+                    .foregroundStyle(Color.black)
+            }
+            
+        }
+        
+    }
     
     var customizeBackground: some View {
         
@@ -171,13 +194,104 @@ extension EditSVGView{
             Text("Adjust Sizing:")
                 .font(.semiBold(size: 14))
             
+            HStack{
+                
+                sizingButton(size: .small) {
+                    self.sizing = .small
+                }
+                
+                Spacer()
+                
+                sizingButton(size: .medium) {
+                    self.sizing = .medium
+                }
+                
+                Spacer()
+                
+                sizingButton(size: .fullRes) {
+                    self.sizing = .fullRes
+                }
             
+            }
+            
+            
+        }
+        
+    }
+    
+    var downloadButtons: some View {
+        
+        HStack{
+            
+            downloadButton(title: "SVG") {
+                
+            }
+            
+            Spacer()
+            
+            downloadButton(title: "PNG") {
+                
+            }
         }
         
     }
     
 }
 
+extension EditSVGView{
+    
+    func sizingButton(size: SVGSizing, action : @escaping () -> Void) -> some View {
+        
+        Button{
+            
+            action()
+            
+        }label: {
+            
+            RoundedRectangle(cornerRadius: 8)
+                .frame(width: 112, height: 42)
+                .foregroundStyle(sizing == size ? Color.primaryBlue : Color.white)
+                .addStroke(radius: 8, color: .primaryBlue, lineWidth: sizing == size ? 0 : 1)
+                .overlay {
+                    Text(size.rawValue)
+                        .font(.medium(size: 16))
+                        .foregroundStyle(sizing == size ? .white : Color.primaryBlue)
+                }
+            
+        }
+        
+    }
+    
+    func downloadButton(title: String, action: @escaping () -> Void) -> some View {
+        
+        Button{
+            
+            action()
+            
+        }label: {
+            
+            RoundedRectangle(cornerRadius: 8)
+                .foregroundStyle(Color.primaryBlue)
+                .frame(height: 60)
+                .overlay {
+                    
+                    VStack(spacing: 0){
+                        
+                        Text("Download")
+                            .font(.semiBold(size: 14))
+                            .foregroundStyle(Color.white)
+                        
+                        Text(title)
+                            .font(.bold(size: 20))
+                            .foregroundStyle(Color.white)
+                    }
+                }
+            
+        }
+        
+    }
+    
+}
 #Preview {
     EditSVGView(fileName: "BabyItsColdOutside")
 }
