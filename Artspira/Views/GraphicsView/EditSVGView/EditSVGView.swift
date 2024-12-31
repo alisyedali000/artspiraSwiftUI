@@ -13,12 +13,12 @@ struct EditSVGView: View {
     @State var bgColors : [Color] = [.lightBlue, .red, .gray, .yellow, .teal]
     @State var newColor : Color = .white
     @State var color : Color = .white
-    @State var bgColor : Color = .white
+    @State var bgColor : Color = .clear
+    @State var resolution = CGSize(width: 1024, height: 1024)
     
-//    @State private var scale: CGFloat = 1.0 // Scale factor for pinch-to-zoom
-//    @State private var offset: CGSize = .zero
+    @State var saveAsPNG = false
     
-    @State var sizing : SVGSizing = .fullRes
+    @State var sizing : SVGSizing = .medium
     
     var fileName: String
     
@@ -27,19 +27,24 @@ struct EditSVGView: View {
             .padding(.horizontal)
             .onChange(of: newColor) {
                 
-//                if !self.graphicColors.contains(newColor){
-//                    self.graphicColors.append(newColor)
-//                    
-//                }
-                
                 self.color = newColor
             }
             .onChange(of: bgColor) {
+
+            }
+            .onChange(of: sizing) {
                 
-//                if !self.bgColors.contains(bgColor){
-//                    self.bgColors.append(bgColor)
-//                    
-//                }
+                switch sizing {
+                    
+                case .small:
+                    self.resolution = CGSize(width: 512, height: 512)
+                    
+                case .medium:
+                    self.resolution = CGSize(width: 1024, height: 1024)
+                    
+                case .fullRes:
+                    self.resolution = CGSize(width: 2048, height: 2048)
+                }
             }
     }
 }
@@ -56,7 +61,7 @@ extension EditSVGView{
                 
                 VStack(spacing: 20){
                     
-                    SVGViewControllerWrapper(imageName: fileName, nodeColor: $color, bgColor: $bgColor)
+                    SVGViewControllerWrapper(imageName: fileName, nodeColor: $color, bgColor: $bgColor, resolution: $resolution, saveAsPNG: $saveAsPNG)
                         .frame(width: 259, height: 253)
                         .cornerRadius(12, corners: .allCorners)
                         .addStroke(radius: 12, color: .lightGray, lineWidth: 1)
@@ -69,7 +74,18 @@ extension EditSVGView{
                     
                     adjustSizing
                     
-                    downloadButtons
+                    HStack{
+                        
+                        downloadButton(title: "SVG") {
+//                            controller.downloadSVG()
+                        }
+                        
+                        Spacer()
+                        
+                        downloadButton(title: "PNG") {
+                            saveAsPNG.toggle()
+                        }
+                    }
                     
                 }
                 
@@ -215,23 +231,6 @@ extension EditSVGView{
             }
             
             
-        }
-        
-    }
-    
-    var downloadButtons: some View {
-        
-        HStack{
-            
-            downloadButton(title: "SVG") {
-                
-            }
-            
-            Spacer()
-            
-            downloadButton(title: "PNG") {
-                
-            }
         }
         
     }

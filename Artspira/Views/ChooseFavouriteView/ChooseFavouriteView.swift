@@ -21,7 +21,7 @@ struct ChooseFavouriteView: View {
     var body: some View {
         screenView
             .onAppear(){
-                vm.selectedCategories = ["Christmas"] // Uncomment for Preview
+//                vm.selectedCategories = ["Christmas"] // Uncomment for Preview
                 vm.fetchSuggestedGraphics()
             }
             .padding(.horizontal)

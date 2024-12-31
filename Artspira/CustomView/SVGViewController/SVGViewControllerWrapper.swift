@@ -10,11 +10,11 @@ struct SVGViewControllerWrapper: UIViewControllerRepresentable {
     var imageName: String
     @Binding var nodeColor: SwiftUI.Color // Correct reference to SwiftUI.Color
     @Binding var bgColor : SwiftUI.Color
+    @Binding var resolution: CGSize
+    @Binding var saveAsPNG : Bool
 
     func makeUIViewController(context: Context) -> SVGViewController {
         let viewController = SVGViewController()
-//        viewController.updateSVG(fileName: imageName) // Set initial
-//        viewController.updateFillColor(color: UIColor(nodeColor))
         viewController.updateSVG(fileName: imageName)
         return viewController
     }
@@ -23,8 +23,17 @@ struct SVGViewControllerWrapper: UIViewControllerRepresentable {
         
         uiViewController.updateFillColor(color: UIColor(nodeColor))
         uiViewController.updateBGColor(color: UIColor(bgColor))
+        if saveAsPNG{
+            uiViewController.saveAsPNG(at: resolution){
+                DispatchQueue.main.async{
+                    self.saveAsPNG = false
+                }
+            }
+        }
     }
 }
+
+
 
 struct SVGParser: UIViewControllerRepresentable {
     var imageName: String

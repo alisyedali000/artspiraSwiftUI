@@ -6,7 +6,7 @@
 //
 import UIKit
 import Macaw
-
+import Photos
 class SVGViewController: UIViewController {
     
     var svgView = SVGView()
@@ -17,11 +17,7 @@ class SVGViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Initialize and configure svgView
         view.addSubview(svgView)
-//        svgView = SVGView()
-//        svgView.fileName = "example"
         svgView.isUserInteractionEnabled = true
         svgView.translatesAutoresizingMaskIntoConstraints = false
         svgView.backgroundColor = .clear
@@ -63,23 +59,6 @@ class SVGViewController: UIViewController {
             print("Node with tag \(nodeTag) not found.")
         }
     }
-//
-//    func addTouchHandlersToNodes(node: Node) {
-//        node.onTouchPressed { [weak self] touch in
-//            guard let self = self else { return }
-//            print("Node tapped: \(node)")
-//            print("Node tag: \(node.tag ?? ["No tag"])")
-//            print("Node type: \(type(of: node))")
-//            self.changeNodeColor(nodeTag: node.tag.first ?? "")
-//        }
-//
-//        if let group = node as? Group {
-//            for child in group.contents {
-//                addTouchHandlersToNodes(node: child)
-//            }
-//        }
-//    }
-    
     func addTouchHandlersToNodes(node: Node) {
         // Attach touch handlers to all nodes
         if let shapeNode = node as? Shape {
@@ -163,6 +142,43 @@ class SVGViewController: UIViewController {
         // Update the color of nodes in the SVG
         self.svgView.backgroundColor = color
     }
+    
+    func saveAsPNG(at resolution: CGSize, completion: @escaping () -> Void) {
+        // Ensure svgView has valid bounds
+        print("Current node state: \(svgView.node)")
+        
+        let originalBounds = svgView.bounds
+        let scaleX = resolution.width / originalBounds.width
+        let scaleY = resolution.height / originalBounds.height
+        
+        let renderer = UIGraphicsImageRenderer(size: resolution)
+        let image = renderer.image { context in
+            let cgContext = context.cgContext
+            
+            // Scale the context to match the custom resolution
+            cgContext.scaleBy(x: scaleX, y: scaleY)
+            svgView.layer.render(in: cgContext)
+        }
+        
+        // Convert to PNG data
+        if let pngData = image.pngData() {
+            // Convert Data back to UIImage
+            if let pngImage = UIImage(data: pngData) {
+                // Save the PNG UIImage to the Photos album
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetCreationRequest.creationRequestForAsset(from: pngImage)
+                }) { success, error in
+                    if success {
+                        print("PNG saved to gallery successfully at resolution: \(resolution.width)x\(resolution.height)!")
+                    } else if let error = error {
+                        print("Error saving PNG: \(error.localizedDescription)")
+                    }
+                    completion()
+                }
+            }
+        }
+    }
+    
 }
 
 extension SVGViewController: UIGestureRecognizerDelegate {

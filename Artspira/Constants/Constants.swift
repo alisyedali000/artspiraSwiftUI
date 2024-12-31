@@ -12,3 +12,5 @@ enum SVGSizing : String{
     case fullRes = "Full-Res"
     
 }
+
+var categories: [String: [String]] = [:] //Fetching all categories and svgs

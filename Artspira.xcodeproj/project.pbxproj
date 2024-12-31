@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		412345CB2D23E46400EA1D8B /* AllGraphics in Resources */ = {isa = PBXBuildFile; fileRef = 412345CA2D23E46300EA1D8B /* AllGraphics */; };
 		41359C3C2D16DB610088BDF3 /* Macaw in Frameworks */ = {isa = PBXBuildFile; productRef = 41359C3B2D16DB610088BDF3 /* Macaw */; };
 		41359C3F2D16DBCE0088BDF3 /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 41359C3E2D16DBCE0088BDF3 /* SVGKit */; };
 		41359C412D16DBCE0088BDF3 /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41359C402D16DBCE0088BDF3 /* SVGKitSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		412345CA2D23E46300EA1D8B /* AllGraphics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AllGraphics; path = Artspira/AllGraphics; sourceTree = "<group>"; };
 		418C7B722D14229500EDD152 /* Artspira.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artspira.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -54,6 +56,7 @@
 		418C7B692D14229500EDD152 = {
 			isa = PBXGroup;
 			children = (
+				412345CA2D23E46300EA1D8B /* AllGraphics */,
 				418C7B742D14229500EDD152 /* Artspira */,
 				418C7B732D14229500EDD152 /* Products */,
 			);
@@ -138,6 +141,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				412345CB2D23E46400EA1D8B /* AllGraphics in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
