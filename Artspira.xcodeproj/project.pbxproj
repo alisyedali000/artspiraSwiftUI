@@ -7,15 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		412345CB2D23E46400EA1D8B /* AllGraphics in Resources */ = {isa = PBXBuildFile; fileRef = 412345CA2D23E46300EA1D8B /* AllGraphics */; };
+		412345D32D2442DD00EA1D8B /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 412345D22D2442DD00EA1D8B /* RevenueCat */; };
+		412345D52D2442DD00EA1D8B /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 412345D42D2442DD00EA1D8B /* RevenueCatUI */; };
 		41359C3C2D16DB610088BDF3 /* Macaw in Frameworks */ = {isa = PBXBuildFile; productRef = 41359C3B2D16DB610088BDF3 /* Macaw */; };
 		41359C3F2D16DBCE0088BDF3 /* SVGKit in Frameworks */ = {isa = PBXBuildFile; productRef = 41359C3E2D16DBCE0088BDF3 /* SVGKit */; };
 		41359C412D16DBCE0088BDF3 /* SVGKitSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 41359C402D16DBCE0088BDF3 /* SVGKitSwift */; };
+		41D01B492D253B5400E2FBC6 /* AllGraphics in Resources */ = {isa = PBXBuildFile; fileRef = 41D01B482D253B5300E2FBC6 /* AllGraphics */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		412345CA2D23E46300EA1D8B /* AllGraphics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AllGraphics; path = Artspira/AllGraphics; sourceTree = "<group>"; };
 		418C7B722D14229500EDD152 /* Artspira.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Artspira.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		41D01B482D253B5300E2FBC6 /* AllGraphics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AllGraphics; path = Artspira/AllGraphics; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -44,8 +46,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				412345D32D2442DD00EA1D8B /* RevenueCat in Frameworks */,
 				41359C412D16DBCE0088BDF3 /* SVGKitSwift in Frameworks */,
 				41359C3F2D16DBCE0088BDF3 /* SVGKit in Frameworks */,
+				412345D52D2442DD00EA1D8B /* RevenueCatUI in Frameworks */,
 				41359C3C2D16DB610088BDF3 /* Macaw in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -56,7 +60,7 @@
 		418C7B692D14229500EDD152 = {
 			isa = PBXGroup;
 			children = (
-				412345CA2D23E46300EA1D8B /* AllGraphics */,
+				41D01B482D253B5300E2FBC6 /* AllGraphics */,
 				418C7B742D14229500EDD152 /* Artspira */,
 				418C7B732D14229500EDD152 /* Products */,
 			);
@@ -93,6 +97,8 @@
 				41359C3B2D16DB610088BDF3 /* Macaw */,
 				41359C3E2D16DBCE0088BDF3 /* SVGKit */,
 				41359C402D16DBCE0088BDF3 /* SVGKitSwift */,
+				412345D22D2442DD00EA1D8B /* RevenueCat */,
+				412345D42D2442DD00EA1D8B /* RevenueCatUI */,
 			);
 			productName = Artspira;
 			productReference = 418C7B722D14229500EDD152 /* Artspira.app */;
@@ -125,6 +131,7 @@
 			packageReferences = (
 				41359C3A2D16DB610088BDF3 /* XCRemoteSwiftPackageReference "Macaw" */,
 				41359C3D2D16DBCE0088BDF3 /* XCRemoteSwiftPackageReference "SVGKit" */,
+				412345D12D2442DD00EA1D8B /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 418C7B732D14229500EDD152 /* Products */;
@@ -141,7 +148,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				412345CB2D23E46400EA1D8B /* AllGraphics in Resources */,
+				41D01B492D253B5400E2FBC6 /* AllGraphics in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +378,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		412345D12D2442DD00EA1D8B /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.14.4;
+			};
+		};
 		41359C3A2D16DB610088BDF3 /* XCRemoteSwiftPackageReference "Macaw" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/exyte/Macaw.git";
@@ -390,6 +405,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		412345D22D2442DD00EA1D8B /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 412345D12D2442DD00EA1D8B /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		412345D42D2442DD00EA1D8B /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 412345D12D2442DD00EA1D8B /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
+		};
 		41359C3B2D16DB610088BDF3 /* Macaw */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 41359C3A2D16DB610088BDF3 /* XCRemoteSwiftPackageReference "Macaw" */;

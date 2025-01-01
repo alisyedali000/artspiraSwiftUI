@@ -12,21 +12,6 @@ struct SplashView: View {
     @StateObject var vm = ViewModel()
     var body: some View {
         screenView
-            .onAppear(){
-                
-                if let projectPath = Bundle.main.resourcePath?.appending("/AllGraphics") {
-                    vm.fetchAllGraphics(from: projectPath, to: &categories)
-                    
-                    for (category, files) in categories {
-                        debugPrint("Category: \(category)")
-                        for file in files {
-                            debugPrint("  File: \(file)")
-                        }
-                    }
-                }
-
-                
-            }
             .navigationDestination(isPresented: $moveNext) {
                 
                 PersonalizeView()

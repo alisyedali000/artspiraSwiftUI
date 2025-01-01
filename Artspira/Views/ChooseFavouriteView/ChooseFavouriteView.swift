@@ -90,7 +90,7 @@ extension ChooseFavouriteView{
             AppButton(title: "Continue") {
                 
                 vm.addFavourties(){
-                    
+                    UserDefaultManager.shared.setSplashShown()
                     self.moveNext.toggle()
                     
                 }

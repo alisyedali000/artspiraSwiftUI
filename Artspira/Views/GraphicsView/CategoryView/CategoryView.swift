@@ -33,7 +33,7 @@ extension CategoryView{
             
             ScrollView {
                 
-                if let filenames = categories[selectedCategory] {
+                if let filenames = CategoryManager.shared.categories[selectedCategory] {
                     
                     VStack(alignment: .leading, spacing: 10) {
                         

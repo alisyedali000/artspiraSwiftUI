@@ -58,4 +58,12 @@ enum ImageName: String {
         
         Image("splashImage")
     }
+    
+    //MARK: SubscriptionScreen
+    
+    static var subscriptionScreenImage: Image {
+        
+        Image("SubscriptionBlockImage")
+    }
+    
 }

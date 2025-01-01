@@ -27,6 +27,8 @@ extension TopNav{
             
             Text(title)
                 .font(.semiBold(size: 18))
+                .frame(maxWidth: 130)
+                .lineLimit(1)
             
             HStack{
                 

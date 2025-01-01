@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditSVGView: View {
-    
+    @ObservedObject var vm = ViewModel()
     @State var graphicColors : [Color] = [.red, .green, .blue, .gray, .brown]
     @State var bgColors : [Color] = [.lightBlue, .red, .gray, .yellow, .teal]
     @State var newColor : Color = .white
@@ -106,10 +106,23 @@ extension EditSVGView{
             
             Button{
                 
+                if vm.personalizeFavourites.contains(fileName){
+                    
+                    vm.personalizeFavourites.removeAll(where: {$0 == fileName})
+                    
+                } else {
+                    
+                    vm.personalizeFavourites.append(fileName)
+                 
+                }
+                
+                UserDefaultManager.shared.setFavourites(favourites: vm.personalizeFavourites)
+                
             }label: {
-                ImageName.favourites
-                    .renderingMode(.template)
+                Image(systemName: vm.personalizeFavourites.contains(fileName) ? "heart.fill" : "heart")
+                    .resizable()
                     .foregroundStyle(Color.black)
+                    .frame(width: 22, height: 22)
             }
             
         }

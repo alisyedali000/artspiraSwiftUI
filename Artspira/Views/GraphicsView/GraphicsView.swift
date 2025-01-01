@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GraphicsView: View {
-    
+    @ObservedObject var categories = CategoryManager.shared
     let columns = [
          GridItem(.flexible()),
          GridItem(.flexible())
@@ -35,7 +35,7 @@ extension GraphicsView{
                 
                 LazyVGrid(columns: columns, spacing: 16) {
                     
-                    ForEach(categories.keys.sorted(), id: \.self) { category in
+                    ForEach(categories.categories.keys.sorted(), id: \.self) { category in
                         
                         NavigationLink{
                             
@@ -47,7 +47,7 @@ extension GraphicsView{
                             GraphicGridCell(
                                 title: category.capitalized,
                                 bgColor: Color(hex: "#D8E0FB"),
-                                imageName: "\(categories[category]?.first ?? "")"
+                                imageName: "\(categories.categories[category]?.first ?? "")"
                             )
                         }
                         

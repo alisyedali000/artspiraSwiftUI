@@ -37,14 +37,14 @@ class SVGViewController: UIViewController {
             self.addTouchHandlersToNodes(node: self.svgView.node)
         }
         
-        // Add pinch gesture recognizer
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
-        svgView.addGestureRecognizer(pinchGesture)
-        
-        // Add pan gesture recognizer
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        panGesture.delegate = self
-        svgView.addGestureRecognizer(panGesture)
+//        // Add pinch gesture recognizer
+//        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+//        svgView.addGestureRecognizer(pinchGesture)
+//        
+//        // Add pan gesture recognizer
+//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+//        panGesture.delegate = self
+//        svgView.addGestureRecognizer(panGesture)
     }
     
     func changeNodeColor(nodeTag: String) {
@@ -98,28 +98,28 @@ class SVGViewController: UIViewController {
         return Color.rgba(r: Int(red * 255), g: Int(green * 255), b: Int(blue * 255), a: Double(alpha))
     }
     
-    @objc func handlePinchGesture(_ recognizer: UIPinchGestureRecognizer) {
-        if recognizer.state == .began || recognizer.state == .changed {
-            let scale = recognizer.scale
-
-            totalScale *= scale
-            recognizer.scale = 1.0
-            updateNodeTransform()
-            debugPrint("Pinched using macaw")
-        }
-    }
+//    @objc func handlePinchGesture(_ recognizer: UIPinchGestureRecognizer) {
+//        if recognizer.state == .began || recognizer.state == .changed {
+//            let scale = recognizer.scale
+//
+//            totalScale *= scale
+//            recognizer.scale = 1.0
+//            updateNodeTransform()
+//            debugPrint("Pinched using macaw")
+//        }
+//    }
     
-    @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: svgView)
-        
-        if recognizer.state == .began || recognizer.state == .changed {
-            totalTranslation.x += translation.x
-            totalTranslation.y += translation.y
-            recognizer.setTranslation(.zero, in: svgView)
-            updateNodeTransform()
-            debugPrint("dragged using macaw")
-        }
-    }
+//    @objc func handlePanGesture(_ recognizer: UIPanGestureRecognizer) {
+//        let translation = recognizer.translation(in: svgView)
+//        
+//        if recognizer.state == .began || recognizer.state == .changed {
+//            totalTranslation.x += translation.x
+//            totalTranslation.y += translation.y
+//            recognizer.setTranslation(.zero, in: svgView)
+//            updateNodeTransform()
+//            debugPrint("dragged using macaw")
+//        }
+//    }
     
     func updateNodeTransform() {
         let scaleTransform = Transform.scale(sx: totalScale, sy: totalScale)
@@ -181,11 +181,11 @@ class SVGViewController: UIViewController {
     
 }
 
-extension SVGViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-}
+//extension SVGViewController: UIGestureRecognizerDelegate {
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        return true
+//    }
+//}
 
 class SVGParserViewController: UIViewController {
     
