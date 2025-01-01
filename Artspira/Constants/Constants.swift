@@ -18,7 +18,6 @@ class CategoryManager: ObservableObject{
     
     static let shared = CategoryManager()
     @Published var categories: [String: [String]] = [:] //Fetching all categories and svgs
-    
     func fetchAllGraphics(from path: String, to categories: inout [String: [String]]) {
         let fileManager = FileManager.default
         

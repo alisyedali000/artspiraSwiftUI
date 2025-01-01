@@ -57,7 +57,7 @@ extension EditSVGView{
             
             topNav
             
-            ScrollView{
+            ScrollView(showsIndicators: false){
                 
                 VStack(spacing: 20){
                     

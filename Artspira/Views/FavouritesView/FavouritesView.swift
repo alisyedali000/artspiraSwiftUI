@@ -16,6 +16,7 @@ struct FavouritesView: View {
     ]
     var body: some View {
         screenView
+            .padding(.horizontal)
             .onAppear(){
                 vm.personalizeFavourites = UserDefaultManager.shared.getFavourites()
             }
