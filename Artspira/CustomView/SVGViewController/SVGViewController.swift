@@ -7,15 +7,19 @@
 import UIKit
 import Macaw
 import Photos
-class SVGViewController: UIViewController {
+
+class SVGViewController: UIViewController, UIDocumentPickerDelegate {
     
     var svgView = SVGView()
     var nodeTransform = Transform.identity
     var fillColor: UIColor = .red
     var totalScale: CGFloat = 2.0
     var totalTranslation: CGPoint = .zero
+    var fileURL : URL?
+    
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         view.addSubview(svgView)
         svgView.isUserInteractionEnabled = true
@@ -84,20 +88,6 @@ class SVGViewController: UIViewController {
         
     }
     
-    func convertUIColorToMacawColor(uiColor: UIColor) -> Color {
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        
-        // Extract RGBA components from UIColor
-        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        
-        // Convert the CGFloat values to Int for red, green, blue
-        // Alpha is passed as a Double, so no scaling is required.
-        return Color.rgba(r: Int(red * 255), g: Int(green * 255), b: Int(blue * 255), a: Double(alpha))
-    }
-    
 //    @objc func handlePinchGesture(_ recognizer: UIPinchGestureRecognizer) {
 //        if recognizer.state == .began || recognizer.state == .changed {
 //            let scale = recognizer.scale
@@ -143,6 +133,25 @@ class SVGViewController: UIViewController {
         self.svgView.backgroundColor = color
     }
     
+    func convertUIColorToMacawColor(uiColor: UIColor) -> Color {
+        
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        return Color.rgba(r: Int(red * 255), g: Int(green * 255), b: Int(blue * 255), a: Double(alpha))
+    }
+    
+}
+
+
+
+extension SVGViewController{
+    
+    
     func saveAsPNG(at resolution: CGSize, completion: @escaping () -> Void) {
         // Ensure svgView has valid bounds
         print("Current node state: \(svgView.node)")
@@ -160,33 +169,33 @@ class SVGViewController: UIViewController {
             svgView.layer.render(in: cgContext)
         }
         
-        // Convert to PNG data
+
         if let pngData = image.pngData() {
-            // Convert Data back to UIImage
+
             if let pngImage = UIImage(data: pngData) {
-                // Save the PNG UIImage to the Photos album
+
                 PHPhotoLibrary.shared().performChanges({
                     PHAssetCreationRequest.creationRequestForAsset(from: pngImage)
                 }) { success, error in
                     
                     DispatchQueue.main.async{
-
-                    if success {
                         
-                        self.showAlert(
-                            title: "Artspira",
-                            message: "PNG saved to gallery successfully at resolution: \(Int(resolution.width))x\(Int(resolution.height))!"
-                        )
-                        
-                        print("PNG saved to gallery successfully at resolution: \(resolution.width)x\(resolution.height)!")
-                    } else if let error = error {
-                        self.showAlert(
-                            title: "Artspira",
-                            message: "Error saving PNG: \(error.localizedDescription)"
-                        )
-                        
-                        print("Error saving PNG: \(error.localizedDescription)")
-                    }
+                        if success {
+                            
+                            self.showAlert(
+                                title: "Artspira",
+                                message: "PNG saved to gallery successfully at resolution: \(Int(resolution.width))x\(Int(resolution.height))!"
+                            )
+                            
+                            print("PNG saved to gallery successfully at resolution: \(resolution.width)x\(resolution.height)!")
+                        } else if let error = error {
+                            self.showAlert(
+                                title: "Artspira",
+                                message: "Error saving PNG: \(error.localizedDescription)"
+                            )
+                            
+                            print("Error saving PNG: \(error.localizedDescription)")
+                        }
                         
                     }
                     completion()
@@ -195,9 +204,53 @@ class SVGViewController: UIViewController {
         }
     }
     
-}
+    func saveAsSVG(resolution: CGSize, completion : @escaping () -> Void) {
 
+        let svgString = SVGSerializer.serialize(node: svgView.node)
+        
+
+        let fileManager = FileManager.default
+        guard let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Documents directory not found.")
+            return
+        }
+        
+        self.fileURL = documentsDirectory.appendingPathComponent("Artspira\(UUID()).svg")
+        
+        if let fileURL = fileURL{
+            do {
+         
+                try svgString.write(to: fileURL, atomically: true, encoding: .utf8)
+                print("SVG saved to: \(fileURL.path)")
+                
+                let documentPicker = UIDocumentPickerViewController(forExporting: [fileURL], asCopy: true)
+                documentPicker.delegate = self
+                documentPicker.modalPresentationStyle = .formSheet
+                present(documentPicker, animated: true, completion: completion)
+                
+            } catch {
+                print("Error saving SVG: \(error.localizedDescription)")
+            }
+        }
+        
+        
+    }
+}
 extension SVGViewController{
+
+    func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        guard let selectedURL = urls.first else { return }
+        if let fileURL = fileURL{
+            do {
+                // Copy the file from the temporary location to the selected location
+                try FileManager.default.copyItem(at: fileURL, to: selectedURL)
+                
+                self.showAlert(title: "Success", message: "SVG successfully saved!")
+            } catch {
+                
+            }
+        }
+    }
     
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -206,7 +259,9 @@ extension SVGViewController{
         present(alertController, animated: true, completion: nil)
     }
     
+
 }
+
 
 //extension SVGViewController: UIGestureRecognizerDelegate {
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
@@ -246,4 +301,3 @@ class SVGParserViewController: UIViewController {
     }
 
 }
-

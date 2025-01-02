@@ -18,7 +18,7 @@ struct EditSVGView: View {
     @State var resolution = CGSize(width: 1024, height: 1024)
     
     @State var saveAsPNG = false
-    
+    @State var saveAsSVG = false
     @State var sizing : SVGSizing = .medium
     
     @State var showPaywall = false
@@ -69,7 +69,7 @@ extension EditSVGView{
                 
                 VStack(spacing: 20){
                     
-                    SVGViewControllerWrapper(imageName: fileName, nodeColor: $color, bgColor: $bgColor, resolution: $resolution, saveAsPNG: $saveAsPNG)
+                    SVGViewControllerWrapper(imageName: fileName, nodeColor: $color, bgColor: $bgColor, resolution: $resolution, saveAsPNG: $saveAsPNG, saveAsSVG: $saveAsSVG)
                         .frame(width: 259, height: 253)
                         .cornerRadius(12, corners: .allCorners)
                         .addStroke(radius: 12, color: .lightGray, lineWidth: 1)
@@ -85,7 +85,7 @@ extension EditSVGView{
                     HStack{
                         
                         downloadButton(title: "SVG") {
-//                            controller.downloadSVG()
+                            saveAsSVG.toggle()
                         }
                         
                         Spacer()
