@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct EditSVGView: View {
+    @ObservedObject var subscriptionManager = SubscriptionManager.shared
     @ObservedObject var vm = ViewModel()
     @State var graphicColors : [Color] = [.red, .green, .blue, .gray, .brown]
     @State var bgColors : [Color] = [.lightBlue, .red, .gray, .yellow, .teal]
@@ -20,11 +21,18 @@ struct EditSVGView: View {
     
     @State var sizing : SVGSizing = .medium
     
+    @State var showPaywall = false
+    
     var fileName: String
     
     var body: some View {
         screenView
             .padding(.horizontal)
+            .fullScreenCover(isPresented: $showPaywall, content: {
+                
+                SubscriptionScreen()
+                
+            })
             .onChange(of: newColor) {
                 
                 self.color = newColor
@@ -278,7 +286,17 @@ extension EditSVGView{
         
         Button{
             
-            action()
+            subscriptionManager.status { isActive in
+                
+                if isActive {
+                    
+                    action()
+                    
+                } else {
+                    
+                    self.showPaywall = true
+                }
+            }
             
         }label: {
             

@@ -5,6 +5,7 @@
 //  Created by Syed Ahmad  on 26/12/2024.
 //
 import Foundation
+import RevenueCat
 
 enum SVGSizing : String{
     
@@ -13,6 +14,24 @@ enum SVGSizing : String{
     case fullRes = "Full-Res"
     
 }
+
+extension SubscriptionPeriod {
+    var durationTitle: String {
+        switch self.unit {
+        case .day: return "Daily"
+        case .week: return "Weekly"
+        case .month: return "Monthly"
+        case .year: return "Yearly"
+        @unknown default: return "Unknown"
+        }
+    }
+    var periodTitle: String {
+        let periodString = "\(self.value) \(self.unit.debugDescription)"
+        let pluralized = self.value > 1 ? periodString + "s" : periodString
+        return pluralized
+    }
+}
+
 
 class CategoryManager: ObservableObject{
     
