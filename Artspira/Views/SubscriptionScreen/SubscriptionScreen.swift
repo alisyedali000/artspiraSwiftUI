@@ -178,7 +178,7 @@ extension SubscriptionScreen{
             Text("Not sure yet? Enable Free Trial")
                 .font(.semiBold(size: 14))
                 .lineLimit(1)
-                .frame(width: 210)
+                .frame(maxWidth: 210)
             
             Spacer()
             
