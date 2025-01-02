@@ -168,15 +168,42 @@ class SVGViewController: UIViewController {
                 PHPhotoLibrary.shared().performChanges({
                     PHAssetCreationRequest.creationRequestForAsset(from: pngImage)
                 }) { success, error in
+                    
+                    DispatchQueue.main.async{
+
                     if success {
+                        
+                        self.showAlert(
+                            title: "Artspira",
+                            message: "PNG saved to gallery successfully at resolution: \(Int(resolution.width))x\(Int(resolution.height))!"
+                        )
+                        
                         print("PNG saved to gallery successfully at resolution: \(resolution.width)x\(resolution.height)!")
                     } else if let error = error {
+                        self.showAlert(
+                            title: "Artspira",
+                            message: "Error saving PNG: \(error.localizedDescription)"
+                        )
+                        
                         print("Error saving PNG: \(error.localizedDescription)")
+                    }
+                        
                     }
                     completion()
                 }
             }
         }
+    }
+    
+}
+
+extension SVGViewController{
+    
+    func showAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
     }
     
 }

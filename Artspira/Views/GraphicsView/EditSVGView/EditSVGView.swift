@@ -295,6 +295,7 @@ extension EditSVGView{
                 } else {
                     
                     self.showPaywall = true
+                
                 }
             }
             
